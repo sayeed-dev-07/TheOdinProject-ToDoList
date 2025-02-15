@@ -30,23 +30,38 @@
                 <p class="project-title-name">Demo</p>
             </div>
             <div class="task-container">
-                <div class="name">
-                    Sayeed
+                <div class="task">
+                    <div class="name">
+                        Sayeed shorif is Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem?
+                    </div>
+                    <div class="priority-container">
+                        
+                        <select name="priority" id="priority-select">
+                            <option value="" disabled selected>priority</option>
+                            <option value="green" >low</option>
+                            <option value="yellow">medium</option>
+                            <option value="red">high</option>
+                        </select>
+                    </div>
+                    <div class="date">
+                        <input type="date" name="date" id="date">
+                    </div>
+                    <button id="edit-btn-task">Edit</button>
+                    <button id="delete-btn-task">Delete</button>
                 </div>
-                <div class="priority">
-                    
-                    <select name="priority" id="priority">
-                        <option value="" disabled selected>priority</option>
-                        <option value="low">low</option>
-                        <option value="medium">medium</option>
-                        <option value="high">high</option>
-                    </select>
-                </div>
-                <div class="date">
-                    <input type="date" name="date" id="date">
-                </div>
-                <button id="edit-btn-task">Edit</button>
-                <button id="delete-btn-task">Delete</button>
+            </div>
+            <div class="task-adder">
+                <button>Add Tasks</button>
+            </div>
+            <div class="task-add-input same-div">
+                <input placeholder="Task Name" type="text" id="task-add-input">
+                <button class="task-input-add-btn">Add</button>
+                <button class="task-input-cancel-btn">Cancel</button>
+            </div>
+            <div class="task-edit-input same-div">
+                <input placeholder="Task Name" type="text" id="task-edit-input">
+                <button class="task-input-edit-btn">Save</button>
+                <button class="task-input-back-btn">Back</button>
             </div>
         </div>
     </main>
