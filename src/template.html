@@ -4,8 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDoList</title>
+    <script src="https://kit.fontawesome.com/08b0047d25.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    
+    <header>
+        <p id="logo">ToDoList</p>
+    </header>
+    <main class="main-container">
+        <div class="left-container">
+            <input id="project-name-input" type="text">
+            <button class="project-add-btn">Add Project</button>
+            <p class="project-name-title">Project List</p>
+
+            <div class="project-container">
+                <div class="project">
+                    <p>Demo</p>
+                    <i class="fa-solid fa-trash"></i>
+                </div>
+                
+            </div>
+        </div>
+        <div class="right-container">
+            <div class="right-container-title">
+                <p>Tasks/</p>
+                <p class="project-title-name">Demo</p>
+            </div>
+            <div class="task-container">
+                <div class="name">
+                    Sayeed
+                </div>
+                <div class="priority">
+                    
+                    <select name="priority" id="priority">
+                        <option value="" disabled selected>priority</option>
+                        <option value="low">low</option>
+                        <option value="medium">medium</option>
+                        <option value="high">high</option>
+                    </select>
+                </div>
+                <div class="date">
+                    <input type="date" name="date" id="date">
+                </div>
+                <button id="edit-btn-task">Edit</button>
+                <button id="delete-btn-task">Delete</button>
+            </div>
+        </div>
+    </main>
+    <footer>
+
+    </footer>
 </body>
 </html>
