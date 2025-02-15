@@ -74,7 +74,7 @@ button{
 .project-container{
     margin-top: 1rem;
     width: 95%;
-    min-height: 30vh;
+    min-height: 20vh;
     background-color: cadetblue;
     padding: 1rem;
     overflow-x: hidden;
@@ -87,7 +87,9 @@ button{
     background-color: yellow;
     padding: 0.8rem 1.2rem;
     width:100%;
+    color: rgb(231, 18, 18);
     cursor: pointer;
+    font-weight: 600;
 }
 i:hover{
     transform: scale(1.2);
@@ -164,4 +166,10 @@ i:hover{
     height: 3rem;
     padding: 0rem 0.3rem;
     font-size: 1.2rem;
+}
+.selected{
+    color: rgb(75, 120, 7);
+}
+#hidden{
+    display: none;
 }
