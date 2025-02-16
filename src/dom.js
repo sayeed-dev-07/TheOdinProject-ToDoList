@@ -39,6 +39,7 @@ export default domCreate = function(){
         leftContainer.appendChild(input);
         leftContainer.appendChild(projectAddBtn);
         leftContainer.appendChild(projectTitle);
+        leftContainer.appendChild(projectContainer)
         main.appendChild(leftContainer)
     }
     function createRightContainer(main){
@@ -100,4 +101,6 @@ export default domCreate = function(){
         main.appendChild(rightContainer);
 
     }
+
+    return {createHeader, createMainContainer}
 }
