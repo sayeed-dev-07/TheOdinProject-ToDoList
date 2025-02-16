@@ -173,3 +173,67 @@ i:hover{
 #hidden{
     display: none;
 }
+.modal{
+    width: 360px;
+    padding: 1.5rem 2rem;
+    margin: auto auto;
+    background-color: skyblue;
+    color: black;
+    border-radius: 1rem;
+    border: none;
+    inset: 1;
+    
+}
+#modal2{
+    background-color: #c2e3a2;
+}
+#form > div > p{
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+#form > div > label{
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+#form > div > select{
+    margin-top: 0.4rem;
+    width: 100%;
+    padding: 0.7rem 0.3rem;
+    border-radius: 0.2rem;
+    border: none;
+    outline: none;
+}
+#form > div > button{
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 0.2rem;
+}
+.button-container-modal2{
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.task-priority-input{
+    margin-bottom: 0.8rem;
+}
+#form > div > input{
+    width: 100%;
+    padding: 0.6rem 0.3rem;
+    outline: none;
+    border: none;
+    margin-bottom: 0.6rem;
+    font-size: 1.4rem;
+    border-radius: 0.2rem;
+}
+dialog::backdrop{
+    background: rgba(0,0,0,0.7);
+}
+select > option{
+    font-size: inherit;
+}
+select{
+    font-size: 1.3rem;
+}

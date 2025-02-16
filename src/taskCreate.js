@@ -1,4 +1,4 @@
-export default taskFactory = function(){
+const taskFactory = function(){
     function createTask(inputname, inputpriority, inputdate){
         const task = document.createElement('div');
         const taskName = document.createElement('div');
@@ -46,3 +46,5 @@ export default taskFactory = function(){
     }
     
 }
+
+export{taskFactory};

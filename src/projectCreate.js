@@ -1,9 +1,10 @@
 const projectContainer = document.querySelector('.project-container');
 
-export default projectCreate = function(){
-    function createProject(name){
+const projectCreate = function(){
+    function createProject(name, index){
         const div = document.createElement('div');
         div.classList.add('project');
+        div.id = index;
 
         const p = document.createElement('p');
         p.innerHTML = `${name}`;
@@ -17,3 +18,5 @@ export default projectCreate = function(){
     return{createProject};
 
 }
+
+export{projectCreate}
