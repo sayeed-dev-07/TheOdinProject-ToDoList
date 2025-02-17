@@ -1,8 +1,9 @@
-
+const taskContainer = document.querySelector('.task-container')
 const taskAddToContainer = ()=>{
-    function createTask(inputname, inputpriority, inputdate){
-        const taskContainer = document.querySelector('.task-container')
+    function createTask(inputname, inputpriority, inputdate, index){
+        
         const task = document.createElement('div');
+        task.id = index;
         const taskName = document.createElement('div');
         const priorityContainer = document.createElement('div');
         const date = document.createElement('div');
@@ -49,8 +50,35 @@ const taskAddToContainer = ()=>{
 
         taskContainer.appendChild(task)
     }
-    return {createTask}
-    
+    function deleteAlltasksView(){
+        taskContainer.innerHTML = '';
+    }
+    function deleteSingleTask(index){
+        let allTasks = document.querySelectorAll('.task');
+        for (let i = 0; i < allTasks.length; i++) {
+            let id = allTasks[i].id;
+
+            if(id === index){
+                taskContainer.removeChild(allTasks[i]);
+                break;
+            }
+            
+        }
+    }
+    function renderTasksToDom(projectName){
+        deleteAlltasksView();
+        let projectTask = JSON.parse(localStorage.getItem(projectName));
+        let tasks = projectTask.tasks;
+        for (let i = 0; i < tasks.length; i++) {
+            let name = tasks[i].taskName;
+            let priority = tasks[i].taskPriority;
+            let date = tasks[i].taskDate;
+
+            createTask(name, priority, date, i)
+        }
+        
+    }
+    return{renderTasksToDom, deleteSingleTask}
 }
 
 export{taskAddToContainer};

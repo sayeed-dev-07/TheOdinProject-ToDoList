@@ -10,11 +10,11 @@ const addProjectToStorage = ()=>{
     }
 
     function storeInStorage(name, tasks){
-        window.localStorage.setItem(name, JSON.stringify(tasks));
+        localStorage.setItem(name, JSON.stringify(tasks));
     }
 
     function deleteProjectFromStorage(name){
-        window.localStorage.removeItem(name)
+        localStorage.removeItem(name)
     }
 
     return{createProjectToStorage, deleteProjectFromStorage};

@@ -1,69 +1,58 @@
 import style from './style.css'
-import { domCreate } from './dom';
-import { projectFactory } from "./projectSrc";
+import { addProjectToStorage, addTaskToStorage } from './localStorage';
 import { taskAddToContainer } from './taskCreate';
-import { addProjectToStorage } from './localStorage';
-import { addTaskToStorage } from './localStorage';
-import { projectCreate } from './projectCreate';
 
 
-let addProjectToStorage1 = addProjectToStorage()
-let projectCreate1 = projectCreate()
-let dom1 = domCreate();
-dom1.renderDom()
-// createDefaultProject();
-renderProjects();
+// object initialising 
+const taskView = taskAddToContainer();
+
+
+// select element via dom
+
+const projectContainer = document.querySelector('.project-container')
+
+
+
+
 
 function selectProject(){
     let projects = document.querySelectorAll('.project');
-    projects.forEach(project=>{
-        if(project.classList.contains('selected')){
-            project.classList.remove('selected');
-        }
-    })
+    
 
     projects.forEach(pro=>{
         pro.addEventListener('click',()=>{
-            pro.classList.add('selected');
+            projects.forEach(project=>{
+                project.classList.remove('selected')
+            })
+            pro.classList.add('selected')
         })
     })
 }
+
+
+
+renderProjects()
 selectProject()
 
-function createDefaultProject() {
-    // This function creates a default project to get the user started
-
-    const defaultProjectTask1 = {
-        taskName: "Default task 1",
-        taskPriority: "high",
-        taskDate: "2020-06-29"
-    }
-
-    const defaultProjectTask2 = {
-        taskName: "Default task 2",
-        taskPriority: "high",
-        taskDate:"2020-06-29"
-    }
-
-    const defaultProject = {
-        Name: "Default Project",
-        tasks: [defaultProjectTask1, defaultProjectTask2]
-    }
-    
-
-}
-addProjectToStorage1.createProjectToStorage('sayeed')
-
-
-function renderProjects(){
+function renderProjects() {
     deleteAllProjectFromView();
     let index = 0;
-    for (const key in localStorage) {
+    Object.keys(localStorage).forEach((key) => {
         let projectName = key;
-        projectCreate1.createProject(projectName, index)
-        index++;
-    }
+        const div = document.createElement('div');
+        div.classList.add('project');
+        div.id = index;
 
+        const p = document.createElement('p');
+        p.innerHTML = `${projectName}`;
+        const icon = document.createElement('i');
+        icon.classList.add('fa-solid', 'fa-trash')
+
+        div.appendChild(p);
+        div.appendChild(icon);
+        projectContainer.appendChild(div);
+        index++;
+    });
 }
 
 function deleteAllProjectFromView(){
@@ -71,3 +60,8 @@ function deleteAllProjectFromView(){
     projectContainer.innerHTML = '';
 }
 
+function renderTasks(pname){
+    taskView.renderTasksToDom(pname)
+}
+
+renderTasks('tyson')
