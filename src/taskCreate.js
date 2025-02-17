@@ -69,6 +69,9 @@ const taskAddToContainer = ()=>{
         deleteAlltasksView();
         let projectTask = JSON.parse(localStorage.getItem(projectName));
         let tasks = projectTask.tasks;
+        if(tasks.length === 0){
+            createEmptyNotice();
+        }
         for (let i = 0; i < tasks.length; i++) {
             let name = tasks[i].taskName;
             let priority = tasks[i].taskPriority;
@@ -78,7 +81,12 @@ const taskAddToContainer = ()=>{
         }
         
     }
-    return{renderTasksToDom, deleteSingleTask}
+    function createEmptyNotice(){
+        let p = document.createElement('p');
+        p.classList.add('emptyNotice')
+        p.innerText = 'No Task Availlable'
+    }
+    return{renderTasksToDom, deleteSingleTask, deleteAlltasksView}
 }
 
 export{taskAddToContainer};

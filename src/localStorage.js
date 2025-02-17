@@ -16,6 +16,7 @@ const addProjectToStorage = ()=>{
     function deleteProjectFromStorage(name){
         localStorage.removeItem(name)
     }
+    
 
     return{createProjectToStorage, deleteProjectFromStorage};
 }
@@ -44,6 +45,8 @@ const addTaskToStorage = ()=>{
     function storeInStorageTask(name, obj){
         localStorage.setItem(name, JSON.stringify(obj))
     }
+    
+
     return {createTaskInStorage, deleteTaskFromStorage}
 }
 
