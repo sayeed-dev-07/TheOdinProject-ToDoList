@@ -1,5 +1,7 @@
-const taskFactory = function(){
+
+const taskAddToContainer = ()=>{
     function createTask(inputname, inputpriority, inputdate){
+        const taskContainer = document.querySelector('.task-container')
         const task = document.createElement('div');
         const taskName = document.createElement('div');
         const priorityContainer = document.createElement('div');
@@ -15,10 +17,11 @@ const taskFactory = function(){
         dateInput.name = 'date';
         dateInput.id = 'date';
         button1.id = 'edit-btn-task';
-        button1.id = 'delete-btn-task';
+        button2.id = 'delete-btn-task';
         button1.disabled = true;
 
-        date.value = inputdate;
+
+        dateInput.value = inputdate;
 
         button1.innerText = 'Edit';
         button2.innerText = 'Delete';
@@ -30,12 +33,12 @@ const taskFactory = function(){
         priorityContainer.innerHTML = `
         <select name="priority" id="priority-select">
                             <option value="" disabled selected>priority</option>
-                            <option value="green" >low</option>
-                            <option value="yellow">medium</option>
-                            <option value="red">high</option>
+                            <option value="low" >low</option>
+                            <option value="medium">medium</option>
+                            <option value="high">high</option>
                         </select>
         `
-        const prioritySelect = document.querySelector('#priority-select');
+        const prioritySelect = priorityContainer.querySelector('#priority-select');
         prioritySelect.value = inputpriority;
 
         task.appendChild(taskName);
@@ -43,8 +46,11 @@ const taskFactory = function(){
         task.appendChild(date);
         task.appendChild(button1);
         task.appendChild(button2);
+
+        taskContainer.appendChild(task)
     }
+    return {createTask}
     
 }
 
-export{taskFactory};
+export{taskAddToContainer};

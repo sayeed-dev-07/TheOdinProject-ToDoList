@@ -1,6 +1,6 @@
 const body = document.querySelector('body');
 
-export default domCreate = function(){
+const domCreate = function(){
     function createHeader(){
         let header = document.createElement('header');
         let p = document.createElement('p');
@@ -15,6 +15,9 @@ export default domCreate = function(){
         mainContainer.classList.add('main-container')
         createLeftContainer(mainContainer)
         createRightContainer(mainContainer)
+        body.appendChild(mainContainer)
+        createForm(mainContainer);
+        
     }
 
     function createLeftContainer(main){
@@ -99,8 +102,53 @@ export default domCreate = function(){
         rightContainer.appendChild(taskAddInput);
         rightContainer.appendChild(taskEditInput);
         main.appendChild(rightContainer);
+        
+
+    }
+    function createForm(main){
+        const dialog = document.createElement('dialog');
+        dialog.id = 'modal2';
+        dialog.classList.add('modal')
+
+        dialog.innerHTML = `
+        
+            <form id="form" name="form">
+            <div class="task-name-input">
+                <p>Name:</p>
+                <input required id="name-input" type="text">
+            </div>
+            <div class="task-priority-input">
+                <label for="priority">Priority:</label>
+                <select required name="priority" id="priority">
+                    <option value="" disabled selected>priority</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <div class="due">
+                <p>Due:</p>
+                <input required id="dateInput" type="date">
+            </div>
+            <div class="button-container-modal2">
+                <button id="submitBtn" type="submit" class="add-btn add-project-btn">Add</button>
+                <button type="button" class="cancel-btn cancel-project-btn">Cancel</button>
+            </div>
+            </form>
+        
+        
+        `
+        main.appendChild(dialog)
+    }
+
+    function renderDom(){
+        createHeader();
+        createMainContainer();
+        createForm();
 
     }
 
-    return {createHeader, createMainContainer}
+    return {renderDom}
 }
+
+export{domCreate}

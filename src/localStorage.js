@@ -6,15 +6,15 @@ import { taskCreate } from "./taskSrc";
 const addProjectToStorage = ()=>{
     function createProjectToStorage(name){
         let project = projectFactory(name);
-        storeInStorage(project.Name, project.tasks);
+        storeInStorage(project.Name, project);
     }
 
     function storeInStorage(name, tasks){
-        localStorage.setItem(name, JSON.stringify(tasks));
+        window.localStorage.setItem(name, JSON.stringify(tasks));
     }
 
     function deleteProjectFromStorage(name){
-        localStorage.removeItem(name)
+        window.localStorage.removeItem(name)
     }
 
     return{createProjectToStorage, deleteProjectFromStorage};
@@ -28,6 +28,7 @@ const addTaskToStorage = ()=>{
         let selectedProject = document.querySelector('.selected');
         let selectedProjectName = selectedProject.innerText;
         let project = JSON.parse(localStorage.getItem(selectedProjectName))
+        return project;
     }
     function createTaskInStorage(name, priority, date){
         let project = getProject();
@@ -43,6 +44,7 @@ const addTaskToStorage = ()=>{
     function storeInStorageTask(name, obj){
         localStorage.setItem(name, JSON.stringify(obj))
     }
+    return {createTaskInStorage, deleteTaskFromStorage}
 }
 
 export{addProjectToStorage, addTaskToStorage}
