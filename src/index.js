@@ -108,9 +108,12 @@ function renderTasks(projectName) {
     buttonContainer.appendChild(addTaskBtn);
 
     taskView.renderTasksToDom(projectName);
-
     openForm(addTaskBtn);
+
+    // Reattach delete task event listeners
+    deleteTaskFromStoreAndDom(projectName);
 }
+
 
 function openForm(btn) {
     const form = document.querySelector('dialog');
@@ -142,6 +145,7 @@ function getTaskInputInStorage() {
         const nameValue = inputName.value.trim();
         const dateValue = inputDate.value;
         const priorityValue = inputPriority.value;
+
 
         if (!nameValue || !dateValue || !priorityValue) {
             alert('All fields are required.');
@@ -194,7 +198,27 @@ function addDataToTasks() {
         
     });
 }
+function deleteTaskFromStoreAndDom(projectName) {
+    // Create a new listener for the delete buttons
+    let trashIconArray = Array.from(document.querySelectorAll(".delete-btn-task"));
+    let userTaskDetailContainerArray = Array.from(document.querySelectorAll(".task"));
 
+    for (let i = 0; i < userTaskDetailContainerArray.length; i++) {
+        let trashIcon = trashIconArray[i];
+        let userTaskDetailContainer = userTaskDetailContainerArray[i];
+
+        trashIcon.removeEventListener("click", deleteTaskHandler);  // Remove old listener to avoid duplicates
+        trashIcon.addEventListener("click", deleteTaskHandler);  // Re-add the listener after re-rendering
+    }
+
+    function deleteTaskHandler() {
+        let index = this.parentElement.id;
+        taskView.deleteSingleTask(index);
+        taskStorage.deleteTaskFromStorage(index);
+        taskView.renderTasksToDom(projectName);  // Re-render tasks after deletion
+        deleteTaskFromStoreAndDom(projectName);  // Reattach delete event listeners
+    }
+}
 
 
 
@@ -204,3 +228,4 @@ deleteProject();
 inputProject();
 getTaskInputInStorage();
 addDataToTasks();
+

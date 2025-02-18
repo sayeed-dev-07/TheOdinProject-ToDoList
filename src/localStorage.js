@@ -95,17 +95,8 @@ const addTaskToStorage = () => {
     }
 
     function deleteTaskFromStorage(index) {
-        const project = getProject();
-        if (!project) {
-            console.error("Failed to delete task: no project found.");
-            return;
-        }
-
-        if (isNaN(index) || index < 0 || index >= project.tasks.length) {
-            console.error("Invalid task index:", index);
-            return;
-        }
-
+        let project = getProject();
+        
         project.tasks.splice(Number(index), 1);
         storeInStorageTask(project.Name, project);
     }

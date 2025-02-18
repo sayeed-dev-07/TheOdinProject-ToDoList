@@ -5,7 +5,7 @@ const taskAddToContainer = () => {
     function createTask(inputname, inputpriority, inputdate, index) {
         // Ensure unique IDs for tasks and avoid conflicts
         const task = document.createElement('div');
-        task.id = `task-${index}`; // Changed task ID to include a unique prefix
+        task.id = `${index}`; // Changed task ID to include a unique prefix
         const taskName = document.createElement('div');
         const priorityContainer = document.createElement('div');
         const date = document.createElement('div');
@@ -68,13 +68,14 @@ const taskAddToContainer = () => {
     }
 
     function deleteSingleTask(index) {
-        const taskId = `task-${index}`; // Ensure we use the updated ID format
-        const task = document.getElementById(taskId);
-
-        if (task) {
-            taskContainer.removeChild(task);
-        } else {
-            console.error(`Task with ID ${taskId} not found`);
+        const taskContainer = document.querySelector('.task-container');
+        const tasks = document.querySelectorAll('task');
+        for (let i = 0; i < tasks.length; i++) {
+            let id = tasks[i].id;
+            if(id === index){
+                taskContainer.removeChild(tasks[id]);
+            }
+            
         }
     }
 

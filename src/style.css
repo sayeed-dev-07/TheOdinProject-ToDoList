@@ -93,7 +93,7 @@ button{
     background-color: yellow;
     padding: 0.8rem 1.2rem;
     width:100%;
-    color: rgb(231, 18, 18);
+    color: rgb(0, 0, 0);
     cursor: pointer;
     font-weight: 600;
 }
@@ -173,8 +173,10 @@ i:hover{
     padding: 0rem 0.3rem;
     font-size: 1.2rem;
 }
-.selected{
-    color: rgb(75, 120, 7);
+.selected > p{
+    color: rgb(237, 100, 9);
+    transform: scale(1.2);
+    font-weight: 800;
 }
 #hidden{
     display: none;
