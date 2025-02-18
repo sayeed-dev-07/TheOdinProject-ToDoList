@@ -36,7 +36,7 @@ function selectProject() {
 }
 
 function renderProjects() {
-    deleteAllProjectFromView();
+    deleteAllProjectFromView();  // Clear existing project list
     let index = 0;
 
     Object.keys(localStorage).forEach(key => {
@@ -62,6 +62,7 @@ function renderProjects() {
     // Update event listeners for projects
     selectProject();
 }
+
 
 function deleteAllProjectFromView() {
     projectContainer.innerHTML = '';
@@ -92,11 +93,31 @@ function deleteProject() {
             const parent = event.target.parentElement;
             const name = parent.querySelector('p').innerText;
 
+            // Remove project from storage
             projectView.deleteProjectFromStorage(name);
+
+            // Clear the tasks associated with the deleted project
+            const projectTitle = document.querySelector('.project-title-name');
+            if (projectTitle.innerText === `/${name}`) {
+                // Clear task container and reset "Add Task" button
+                const buttonContainer = document.querySelector('.task-adder');
+                buttonContainer.innerHTML = '';  // Remove the "Add Task" button
+                const taskContainer = document.querySelector('.task-container');
+                taskContainer.innerHTML = '';  // Remove all tasks
+
+                projectTitle.innerHTML = ''; // Clear the title of the project
+                let p = document.createElement('p');
+                p.classList.add('notice');
+                p.innerText = 'no task available create or select a project to add or view tasks';
+                taskContainer.appendChild(p);
+            }
+
+            // Re-render the project list to reflect the changes
             renderProjects();
         }
     });
 }
+
 
 function renderTasks(projectName) {
     const buttonContainer = document.querySelector('.task-adder');
