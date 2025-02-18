@@ -157,7 +157,7 @@ i:hover{
     width: 15%;
 
 }
-#priority-select{
+.priority-select{
     width: 100%;
     height: 3rem;
     font-size: 1.4rem;

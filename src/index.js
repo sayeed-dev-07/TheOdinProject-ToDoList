@@ -1,35 +1,28 @@
-import style from './style.css'
-import { addProjectToStorage, addTaskToStorage} from './localStorage';
+import style from './style.css';
+import { addProjectToStorage, addTaskToStorage } from './localStorage';
 import { taskAddToContainer } from './taskCreate';
 
-
-// object initialising 
-const taskStorage = addTaskToStorage()
+// Object Initialization
+const taskStorage = addTaskToStorage();
 const taskView = taskAddToContainer();
 const projectView = addProjectToStorage();
 
+// DOM Selection
+const projectContainer = document.querySelector('.project-container');
 
-// select element via dom
-
-const projectContainer = document.querySelector('.project-container')
-
-
-
-
+// Main Functionality
 
 function selectProject() {
-    let projects = document.querySelectorAll('.project');
-    const projectTitle = document.querySelector('.project-title-name');  // Element to display the title
+    const projects = document.querySelectorAll('.project');
+    const projectTitle = document.querySelector('.project-title-name'); // Element to display the title
 
     projects.forEach(pro => {
         pro.addEventListener('click', () => {
-            // Get the title of the clicked project
-            let ptext = pro.querySelector('p');
-            let title = ptext.innerText;
+            const ptext = pro.querySelector('p');
+            const title = ptext.innerText;
 
-            // Set the title in the projectTitle container
             projectTitle.innerHTML = `/${title}`;
-            renderTasks(title)
+
             // Remove the 'selected' class from all projects
             projects.forEach(project => {
                 project.classList.remove('selected');
@@ -37,18 +30,19 @@ function selectProject() {
 
             // Add the 'selected' class to the clicked project
             pro.classList.add('selected');
+            renderTasks(title);
         });
     });
 }
 
-renderProjects()
-selectProject()
-
 function renderProjects() {
     deleteAllProjectFromView();
     let index = 0;
-    Object.keys(localStorage).forEach((key) => {
-        let projectName = key;
+
+    Object.keys(localStorage).forEach(key => {
+        const projectName = key;
+
+        // Create project container
         const div = document.createElement('div');
         div.classList.add('project');
         div.id = index;
@@ -56,89 +50,157 @@ function renderProjects() {
         const p = document.createElement('p');
         p.innerHTML = `${projectName}`;
         const icon = document.createElement('i');
-        icon.classList.add('fa-solid', 'fa-trash')
+        icon.classList.add('fa-solid', 'fa-trash');
 
         div.appendChild(p);
         div.appendChild(icon);
         projectContainer.appendChild(div);
+
         index++;
     });
+
+    // Update event listeners for projects
+    selectProject();
 }
 
-function deleteAllProjectFromView(){
-    const projectContainer = document.querySelector('.project-container');
+function deleteAllProjectFromView() {
     projectContainer.innerHTML = '';
 }
 
-
-
-function inputProject(){
+function inputProject() {
     const addProjectBtn = document.querySelector('.project-add-btn');
     const projectNameInput = document.querySelector('#project-name-input');
 
-    addProjectBtn.addEventListener('click',()=>{
-        let value = projectNameInput.value;
-        if (value.trim().length === 0 || localStorage.getItem(value) !== null) {
-            alert('Project Name Cant be blank or Already exists')
+    addProjectBtn.addEventListener('click', () => {
+        const value = projectNameInput.value.trim();
+
+        if (value.length === 0 || localStorage.getItem(value) !== null) {
+            alert('Project Name cannot be blank or already exists.');
             return;
         }
-        let newValue = value.trim();
-        projectView.createProjectToStorage(newValue);
-        alert(`Successfully added ${newValue} to Project List`);
-        projectNameInput.value = ''
-        renderProjects()
-        selectProject()
-        
-    })
+
+        projectView.createProjectToStorage(value);
+        alert(`Successfully added "${value}" to Project List.`);
+        projectNameInput.value = '';
+        renderProjects();
+    });
 }
 
-function deleteProject(){
-    
-
-    projectContainer.addEventListener('click', (event) => {
+function deleteProject() {
+    projectContainer.addEventListener('click', event => {
         if (event.target && event.target.classList.contains('fa-trash')) {
-            let parent = event.target.parentElement;
-            let name = parent.querySelector('p').innerText;
+            const parent = event.target.parentElement;
+            const name = parent.querySelector('p').innerText;
 
             projectView.deleteProjectFromStorage(name);
             renderProjects();
-            selectProject();
         }
     });
 }
 
-
-deleteProject()
-inputProject()
-
-
-function addTaskToDom(){
-    clearAlltaskFomDom()
-
-}
-function clearAlltaskFomDom(){
-    const taskContainer = document.querySelector('.task-container')
-    taskContainer.innerHTML = '';
-}
-
-function defaultProject(){
-    let proName = 'Demo';
-    projectView.createProjectToStorage(proName)
-}
-defaultProject()
-
-function renderTasks(projectName){
+function renderTasks(projectName) {
     const buttonContainer = document.querySelector('.task-adder');
     buttonContainer.innerHTML = '';
+
     const addTaskBtn = document.createElement('button');
-    addTaskBtn.textContent = 'Add Task'
+    addTaskBtn.textContent = 'Add Task';
     addTaskBtn.classList.add('add-task-btn');
     buttonContainer.appendChild(addTaskBtn);
+
     taskView.renderTasksToDom(projectName);
 
-    
+    openForm(addTaskBtn);
 }
 
-function renderUserTaskDetails(projectName){
-    const allProject = document.querySelectorAll('.project')
+function openForm(btn) {
+    const form = document.querySelector('dialog');
+    if (!form) {
+        console.error("Form modal not found.");
+        return;
+    }
+
+    btn.addEventListener('click', () => {
+        form.showModal();
+    });
 }
+const dialog = document.querySelector('dialog')
+function getTaskInputInStorage() {
+    const submitBtn = document.querySelector('#submitBtn');
+    const cancelBtn = document.querySelector('#cancel-btn');
+    const inputName = document.querySelector('#name-input');
+    const inputPriority = document.querySelector('#priority');
+    const inputDate = document.querySelector('#dateInput');
+
+    if (!submitBtn || !cancelBtn || !inputName || !inputPriority || !inputDate) {
+        console.error("One or more form elements are missing.");
+        return;
+    }
+
+    submitBtn.addEventListener('click', event => {
+        event.preventDefault();
+
+        const nameValue = inputName.value.trim();
+        const dateValue = inputDate.value;
+        const priorityValue = inputPriority.value;
+
+        if (!nameValue || !dateValue || !priorityValue) {
+            alert('All fields are required.');
+            return;
+        }
+
+        taskStorage.createTaskInStorage(nameValue, priorityValue, dateValue);
+
+        const selectedProject = document.querySelector('.selected p');
+        if (selectedProject) {
+            const projectName = selectedProject.innerText;
+            renderTasks(projectName);
+        }
+
+        inputName.value = '';
+        inputDate.value = '';
+        inputPriority.value = '';
+        dialog.close();
+    });
+
+    cancelBtn.addEventListener('click', () => {
+        const form = document.querySelector('dialog');
+        if (form) {
+            form.close();
+        }
+    });
+}
+
+function addDataToTasks() {
+    const form = document.querySelector('form');
+    const submitBtn = document.getElementById('submitBtn');
+
+
+
+    form.addEventListener('submit', event => {
+        event.preventDefault();
+
+        const dataName = document.getElementById('name-input').value.trim();
+        const dataPriority = document.getElementById('priority').value;
+        const inputDate = document.getElementById('dateInput').value;
+
+        
+        taskStorage.createTaskInStorage(dataName, dataPriority, inputDate);
+
+        const selectedProject = document.querySelector('.selected p');
+        if (selectedProject) {
+            const projectName = selectedProject.innerText;
+            renderTasks(projectName);
+        }
+        
+    });
+}
+
+
+
+
+// Initialize functionality
+renderProjects();
+deleteProject();
+inputProject();
+getTaskInputInStorage();
+addDataToTasks();

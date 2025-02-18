@@ -1,97 +1,122 @@
-const taskContainer = document.querySelector('.task-container')
 
-const taskAddToContainer = ()=>{
-    function createTask(inputname, inputpriority, inputdate, index){
-        
+const taskContainer = document.querySelector('.task-container');
+
+const taskAddToContainer = () => {
+    function createTask(inputname, inputpriority, inputdate, index) {
+        // Ensure unique IDs for tasks and avoid conflicts
         const task = document.createElement('div');
-        task.id = index;
+        task.id = `task-${index}`; // Changed task ID to include a unique prefix
         const taskName = document.createElement('div');
         const priorityContainer = document.createElement('div');
         const date = document.createElement('div');
-        const button1 = document.createElement('button')
-        const button2 = document.createElement('button')
+        const button1 = document.createElement('button');
+        const button2 = document.createElement('button');
         const dateInput = document.createElement('input');
 
-        date.classList.add('date')
+        // Add classes and attributes
+        date.classList.add('date');
         task.classList.add('task');
         taskName.classList.add('name');
         dateInput.type = 'date';
         dateInput.name = 'date';
-        dateInput.id = 'date';
-        button1.id = 'edit-btn-task';
-        button2.id = 'delete-btn-task';
+        dateInput.classList.add('date-input');
+        button1.classList.add('edit-btn-task');
+        button2.classList.add('delete-btn-task');
         button1.disabled = true;
 
+        // Validate and set date value
+        if (!isNaN(Date.parse(inputdate))) {
+            dateInput.value = inputdate;
+        } else {
+            console.error("Invalid date provided:", inputdate);
+        }
 
-        dateInput.value = inputdate;
-
+        // Set button text
         button1.innerText = 'Edit';
         button2.innerText = 'Delete';
 
-        priorityContainer.classList.add('priority-container')
-        taskName.innerText = `${inputname}`;
-        date.appendChild(dateInput)
-
+        // Create priority dropdown with a unique class
+        priorityContainer.classList.add('priority-container');
         priorityContainer.innerHTML = `
-        <select name="priority" id="priority-select">
-                            <option value="" disabled selected>priority</option>
-                            <option value="low" >low</option>
-                            <option value="medium">medium</option>
-                            <option value="high">high</option>
-                        </select>
-        `
-        const prioritySelect = priorityContainer.querySelector('#priority-select');
-        prioritySelect.value = inputpriority;
+        <select name="priority" class="priority-select">
+            <option value="" disabled>priority</option>
+            <option value="low">low</option>
+            <option value="medium">medium</option>
+            <option value="high">high</option>
+        </select>
+        `;
 
+        const prioritySelect = priorityContainer.querySelector('.priority-select');
+
+        // Validate and set priority
+        const validPriorities = ["low", "medium", "high"];
+        if (validPriorities.includes(inputpriority)) {
+            prioritySelect.value = inputpriority;
+        } else {
+            console.warn("Invalid priority:", inputpriority);
+        }
+
+        // Add task elements to the DOM structure
+        taskName.innerText = `${inputname}`;
+        date.appendChild(dateInput);
         task.appendChild(taskName);
-        task.appendChild(priorityContainer)
+        task.appendChild(priorityContainer);
         task.appendChild(date);
         task.appendChild(button1);
         task.appendChild(button2);
-
-        taskContainer.appendChild(task)
+        taskContainer.appendChild(task);
     }
-    function deleteAlltasksView(){
-        taskContainer.innerHTML = '';
-    }
-    function deleteSingleTask(index){
-        let allTasks = document.querySelectorAll('.task');
-        for (let i = 0; i < allTasks.length; i++) {
-            let id = allTasks[i].id;
 
-            if(id === index){
-                taskContainer.removeChild(allTasks[i]);
-                break;
-            }
-            
+    function deleteSingleTask(index) {
+        const taskId = `task-${index}`; // Ensure we use the updated ID format
+        const task = document.getElementById(taskId);
+
+        if (task) {
+            taskContainer.removeChild(task);
+        } else {
+            console.error(`Task with ID ${taskId} not found`);
         }
     }
-    function renderTasksToDom(projectName){
+
+    function renderTasksToDom(projectName) {
         deleteAlltasksView();
-        let projectTask = JSON.parse(localStorage.getItem(projectName));
-        let tasks = projectTask.tasks;
-        if(tasks.length === 0){
+
+        const projectTask = JSON.parse(localStorage.getItem(projectName));
+
+        // Check if projectTask and tasks exist
+        if (!projectTask || !projectTask.tasks || projectTask.tasks.length === 0) {
             createEmptyNotice();
+            return;
         }
+
+        // Render all tasks for the given project
+        const tasks = projectTask.tasks;
         for (let i = 0; i < tasks.length; i++) {
-            let name = tasks[i].taskName;
-            let priority = tasks[i].taskPriority;
-            let date = tasks[i].taskDate;
-
-            createTask(name, priority, date, i)
+            const name = tasks[i].taskName;
+            const priority = tasks[i].taskPriority;
+            const date = tasks[i].taskDate;
+            createTask(name, priority, date, i);
         }
-        
     }
-    function createEmptyNotice(){
-        let p = document.createElement('p');
-        p.innerHTML = 'No Task Availlable ';
-        p.classList.add('notice')
 
-        taskContainer.innerHTML = ``;
-        taskContainer.appendChild(p)
+    function createEmptyNotice() {
+        // Ensure no duplicate empty notices
+        deleteAlltasksView();
 
+        const notice = document.createElement('p');
+        notice.innerHTML = 'No Task Available';
+        notice.classList.add('notice');
+        taskContainer.appendChild(notice);
     }
-    return{renderTasksToDom, deleteSingleTask, deleteAlltasksView}
-}
 
-export{taskAddToContainer};
+    function deleteAlltasksView() {
+        // Clear all tasks and notices
+        while (taskContainer.firstChild) {
+            taskContainer.removeChild(taskContainer.firstChild);
+        }
+    }
+
+    return { renderTasksToDom, deleteSingleTask, deleteAlltasksView };
+};
+
+export { taskAddToContainer };
