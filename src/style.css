@@ -245,3 +245,26 @@ select > option{
 select{
     font-size: 1.3rem;
 }
+
+/* Default priority */
+.priority-default {
+    background-color: lightgray;
+}
+
+/* High priority */
+.priority-high {
+    background-color: red;
+    color: white;
+}
+
+/* Medium priority */
+.priority-medium {
+    background-color: rgb(211, 211, 70);
+    color: black;
+}
+
+/* Low priority */
+.priority-low {
+    background-color: green;
+    color: white;
+}

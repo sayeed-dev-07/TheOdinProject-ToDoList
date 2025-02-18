@@ -159,6 +159,7 @@ function getTaskInputInStorage() {
             const projectName = selectedProject.innerText;
             renderTasks(projectName);
         }
+        
 
         inputName.value = '';
         inputDate.value = '';
@@ -176,10 +177,6 @@ function getTaskInputInStorage() {
 
 function addDataToTasks() {
     const form = document.querySelector('form');
-    const submitBtn = document.getElementById('submitBtn');
-
-
-
     form.addEventListener('submit', event => {
         event.preventDefault();
 
@@ -205,7 +202,6 @@ function deleteTaskFromStoreAndDom(projectName) {
 
     for (let i = 0; i < userTaskDetailContainerArray.length; i++) {
         let trashIcon = trashIconArray[i];
-        let userTaskDetailContainer = userTaskDetailContainerArray[i];
 
         trashIcon.removeEventListener("click", deleteTaskHandler);  // Remove old listener to avoid duplicates
         trashIcon.addEventListener("click", deleteTaskHandler);  // Re-add the listener after re-rendering

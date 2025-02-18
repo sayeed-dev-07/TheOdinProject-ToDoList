@@ -13,6 +13,18 @@ const taskAddToContainer = () => {
         const button2 = document.createElement('button');
         const dateInput = document.createElement('input');
 
+
+        // color change
+
+        if(inputpriority === 'low'){
+            task.classList.add('priority-low')
+        }else if(inputpriority === 'medium'){
+            task.classList.add('priority-medium')
+        }else if(inputpriority === 'high'){
+            task.classList.add('priority-high')
+        }
+
+
         // Add classes and attributes
         date.classList.add('date');
         task.classList.add('task');
