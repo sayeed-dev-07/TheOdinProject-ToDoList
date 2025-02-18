@@ -28,8 +28,8 @@ function selectProject() {
             let title = ptext.innerText;
 
             // Set the title in the projectTitle container
-            projectTitle.innerHTML = `${title}`;
-
+            projectTitle.innerHTML = `/${title}`;
+            renderTasks(title)
             // Remove the 'selected' class from all projects
             projects.forEach(project => {
                 project.classList.remove('selected');
@@ -120,15 +120,25 @@ function clearAlltaskFomDom(){
     const taskContainer = document.querySelector('.task-container')
     taskContainer.innerHTML = '';
 }
-function defaultProject(){
-    let projectName = 'Demo';
-    projectView.createProjectToStorage(projectName);
-    renderProjects()
 
-    taskStorage.createTaskInStorage("Task 1", "high", "2025-02-18")
-    taskStorage.createTaskInStorage("Task 2", "low", "2020-05-18")
+function defaultProject(){
+    let proName = 'Demo';
+    projectView.createProjectToStorage(proName)
+}
+defaultProject()
+
+function renderTasks(projectName){
+    const buttonContainer = document.querySelector('.task-adder');
+    buttonContainer.innerHTML = '';
+    const addTaskBtn = document.createElement('button');
+    addTaskBtn.textContent = 'Add Task'
+    addTaskBtn.classList.add('add-task-btn');
+    buttonContainer.appendChild(addTaskBtn);
+    taskView.renderTasksToDom(projectName);
+
+    
 }
 
-
-
-defaultProject()
+function renderUserTaskDetails(projectName){
+    const allProject = document.querySelectorAll('.project')
+}

@@ -101,7 +101,7 @@ i:hover{
     transform: scale(1.2);
 }
 .right-container-title{
-    width: 15%;
+    width: auto;
     display: flex;
     align-items: center;
     justify-content: center;

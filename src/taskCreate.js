@@ -1,4 +1,5 @@
 const taskContainer = document.querySelector('.task-container')
+
 const taskAddToContainer = ()=>{
     function createTask(inputname, inputpriority, inputdate, index){
         
@@ -83,8 +84,12 @@ const taskAddToContainer = ()=>{
     }
     function createEmptyNotice(){
         let p = document.createElement('p');
-        p.classList.add('emptyNotice')
-        p.innerText = 'No Task Availlable'
+        p.innerHTML = 'No Task Availlable ';
+        p.classList.add('notice')
+
+        taskContainer.innerHTML = ``;
+        taskContainer.appendChild(p)
+
     }
     return{renderTasksToDom, deleteSingleTask, deleteAlltasksView}
 }
